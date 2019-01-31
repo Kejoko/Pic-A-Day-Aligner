@@ -8,4 +8,4 @@ To Do:
 
 Done:
 - JFrame for ease of use and more intuitive user input
-- Implemtation of method to input many image files
+- Implementation of method to input many image files
