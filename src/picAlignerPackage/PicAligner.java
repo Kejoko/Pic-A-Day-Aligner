@@ -4,30 +4,78 @@
 //	Email: 	keeganjkochis@gmail.com
 package picAlignerPackage;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class PicAligner {
 	
-	//	Array List to store all of the images
-	ArrayList<Image> imageList = new ArrayList<Image>();
-	
+	//	ArrayList of BufferedImages to store all of the images
+	ArrayList<BufferedImage> imageList;
 	//	Image to base the rest of the images translations off
-	public Image baseImage;
+	public BufferedImage baseImage;
 	
 	//	Constructor for PicAligner
-	public PicAligner(Image base) {
-		baseImage = base;
+	public PicAligner(File base, File[] fileArr) {
+		//	Create BufferedImage from base
+		try {
+			baseImage = ImageIO.read(base);
+		} catch (IOException e) {
+			// Create JFrame and label then report an error
+			JFrame errorFrame = new JFrame("Error");
+			errorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			errorFrame.setSize(150, 50);
+			errorFrame.setResizable(false);
+			JLabel lblErrorMessage = new JLabel("Could not read " + base.toString() + " as an image");
+			lblErrorMessage.setBounds(0, 0, 150, 50);
+			lblErrorMessage.setHorizontalAlignment(SwingConstants.CENTER);
+			lblErrorMessage.setVerticalAlignment(SwingConstants.CENTER);
+			errorFrame.getContentPane().add(lblErrorMessage);
+			errorFrame.setVisible(true);
+		}
+		
+		//	Add all of the images to imageList
+		importImages(fileArr);
 	}
 	
 	//	Method to import images to add to imageList
-	public void importImages(String folderPath) {
+	public void importImages(File[] fileArr) {
+		//	Set size of imageList
+		imageList = new ArrayList<BufferedImage>(fileArr.length);
 		
+		//	Loop through entire array of files
+		for (int i = 0; i < fileArr.length; i++) {
+			BufferedImage img = null;
+			try {
+				//	Create BufferedImage from current file
+				img = ImageIO.read(fileArr[i]);
+				
+				//	Add current BufferedImage to imageList
+				imageList.add(img);
+				
+			} catch (IOException e) {
+				// Create JFrame and label then report an error
+				JFrame errorFrame = new JFrame("Error");
+				errorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				errorFrame.setSize(150, 50);
+				errorFrame.setResizable(false);
+				JLabel lblErrorMessage = new JLabel("Could not read " + fileArr[i].toString() + " as an image");
+				lblErrorMessage.setBounds(0, 0, 150, 50);
+				lblErrorMessage.setHorizontalAlignment(SwingConstants.CENTER);
+				lblErrorMessage.setVerticalAlignment(SwingConstants.CENTER);
+				errorFrame.getContentPane().add(lblErrorMessage);
+				errorFrame.setVisible(true);
+			}
+		}
 	}
 	
 	//	Method to export images to specified file path
 	//	and delete the imported images from the project
-	public void exportImages(String fileDestination) {
+	public void exportImages(String fileDestination, String fileName) {
 		
 		
 		//	Clear imageList after usage
@@ -35,8 +83,36 @@ public class PicAligner {
 	}
 	
 	public static void main (String args[]) {
-		//	Create the input window
-		inputGUI uiWindow = new inputGUI();
+		//	Create the input JFrame
+		//inputGUI uiWindow = new inputGUI();
+		
+		/*
+		//	Create file to be converted to buffered image
+		File imageFile = new File("/Users/keegan/Pictures/arcanine.jpg");
+		
+		//	Display buffered image for testing
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(imageFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Could not convert file to image.");
+			e.printStackTrace();
+		}
+		
+		//	Display image for testing
+		JFrame editorFrame = new JFrame("Image Demo");
+        editorFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        
+        ImageIcon imageIcon = new ImageIcon(img);
+        JLabel jLabel = new JLabel();
+        jLabel.setIcon(imageIcon);
+        editorFrame.getContentPane().add(jLabel);
+
+        editorFrame.pack();
+        editorFrame.setLocationRelativeTo(null);
+        editorFrame.setVisible(true);
+        */
 		
 	}
 }

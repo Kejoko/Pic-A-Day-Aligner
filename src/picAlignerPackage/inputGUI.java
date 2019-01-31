@@ -23,8 +23,8 @@ public class inputGUI extends JFrame {
 	private static final long serialVersionUID = -4304475731006936106L;
 	private JTextField txtEnterOutputFile;
 	
-	public String mainImageFilePath;
-	public File[] imagesToConvert;
+	public File mainImageFile;
+	public File[] imageFilesToConvert;
 	public String outputFileName;
 	public String fileOutputPath;
 	
@@ -110,8 +110,8 @@ public class inputGUI extends JFrame {
 				
 				int response = imageChooser.showOpenDialog(lblMainImageConfirm);
 				if (response == JFileChooser.APPROVE_OPTION) {
-					mainImageFilePath = imageChooser.getSelectedFile().toString();
-					lblMainImageConfirm.setText(mainImageFilePath);
+					mainImageFile = imageChooser.getSelectedFile();
+					lblMainImageConfirm.setText(mainImageFile.toString());
 				}
 			}
 		});
@@ -131,8 +131,8 @@ public class inputGUI extends JFrame {
 				
 				int response = imageChooser.showOpenDialog(lblNumImagesSelected);
 				if (response == JFileChooser.APPROVE_OPTION) {
-					imagesToConvert = imageChooser.getSelectedFiles();
-					lblNumImagesSelected.setText(imagesToConvert.length + " Images Selected");
+					imageFilesToConvert = imageChooser.getSelectedFiles();
+					lblNumImagesSelected.setText(imageFilesToConvert.length + " Images Selected");
 				}
 			}
 		});
