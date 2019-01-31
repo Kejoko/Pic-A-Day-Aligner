@@ -36,7 +36,7 @@ public class PicAligner {
 	
 	public static void main (String args[]) {
 		//	Create the input window
-		InputWindow uiWindow = new InputWindow();
+		inputGUI uiWindow = new inputGUI();
 		
 	}
 }
