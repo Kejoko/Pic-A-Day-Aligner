@@ -4,8 +4,8 @@
 //	Email: 	keeganjkochis@gmail.com
 package picAlignerPackage;
 import java.awt.Image;
-import java.awt.image.*;
 import java.util.ArrayList;
+import javax.swing.*;
 
 public class PicAligner {
 	
@@ -29,9 +29,14 @@ public class PicAligner {
 	//	and delete the imported images from the project
 	public void exportImages(String fileDestination) {
 		
+		
+		//	Clear imageList after usage
+		imageList.clear();
 	}
 	
 	public static void main (String args[]) {
+		//	Create the input window
+		InputWindow uiWindow = new InputWindow();
 		
 	}
 }
