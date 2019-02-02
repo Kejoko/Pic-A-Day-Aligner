@@ -12,11 +12,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.JRadioButton;
 
 public class inputGUI extends JFrame {
 	
@@ -25,8 +27,10 @@ public class inputGUI extends JFrame {
 	
 	public File mainImageFile;
 	public File[] imageFilesToConvert;
+	public ArrayList<File> imageFileList = new ArrayList<>();
 	public String outputFileName;
 	public String fileOutputPath;
+	boolean transform = false;
 	
 	public inputGUI() {
 		JFrame window = new JFrame();
@@ -80,12 +84,12 @@ public class inputGUI extends JFrame {
 		lblDestinationConfirm.setBounds(387, 159, 357, 16);
 		window.getContentPane().add(lblDestinationConfirm);
 		
-		JButton btnConvert = new JButton("Convert");
-		btnConvert.setBounds(316, 195, 117, 29);
-		window.getContentPane().add(btnConvert);
+		JButton btnExport = new JButton("Export");
+		btnExport.setBounds(316, 210, 117, 29);
+		window.getContentPane().add(btnExport);
 		
 		JButton btnQuit = new JButton("Quit");
-		btnQuit.setBounds(316, 236, 117, 29);
+		btnQuit.setBounds(316, 240, 117, 29);
 		window.getContentPane().add(btnQuit);
 		
 		JLabel lblConversionComplete = new JLabel("Conversion Complete!");
@@ -93,6 +97,11 @@ public class inputGUI extends JFrame {
 		lblConversionComplete.setHorizontalAlignment(SwingConstants.CENTER);
 		lblConversionComplete.setBounds(279, 277, 191, 16);
 		window.getContentPane().add(lblConversionComplete);
+		
+		JRadioButton rdbtnTransformImages = new JRadioButton("Transform Images To Align Faces");
+		rdbtnTransformImages.setHorizontalAlignment(SwingConstants.CENTER);
+		rdbtnTransformImages.setBounds(239, 187, 271, 23);
+		window.getContentPane().add(rdbtnTransformImages);
 		
 		window.setVisible(true);
 		
@@ -132,7 +141,21 @@ public class inputGUI extends JFrame {
 				int response = imageChooser.showOpenDialog(lblNumImagesSelected);
 				if (response == JFileChooser.APPROVE_OPTION) {
 					imageFilesToConvert = imageChooser.getSelectedFiles();
-					lblNumImagesSelected.setText(imageFilesToConvert.length + " Images Selected");
+					
+					//	Add File array to imageFileList by looping through entire file array
+					for (int i = 0; i < imageFilesToConvert.length; i++) {
+						imageFileList.add(imageFilesToConvert[i]);
+					}
+				}
+				
+				//	Check if any files are currently in imageFileList
+				if (imageFileList.size() > 0) {
+					//	If there are more than 0 files in imageFileList change button
+					//	Text to display "Select more files
+					btnConversionImages.setText("Select More Images");
+					
+					//	Update lblNumImagesSelected to display number of images in imageFileList
+					lblNumImagesSelected.setText(imageFileList.size() + " Images Selected");
 				}
 			}
 		});
@@ -174,12 +197,28 @@ public class inputGUI extends JFrame {
 			}
 		});
 		
+		//	Check if radio button is pressed to transform images
+		rdbtnTransformImages.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				transform = true;
+			}
+		});
+		
 		//	Check if button is pressed to run the conversion
-		btnConvert.addActionListener(new ActionListener() {
+		btnExport.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				//	Check if TransformImages radio button is selected
+				if (transform) {
+					//	Transform images using the baseline image as a reference
+					
+				}
+				
+				//	Export the images using the methods
 				
 				//	Display Message
 				lblConversionComplete.setVisible(true);

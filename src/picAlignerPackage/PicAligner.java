@@ -20,7 +20,7 @@ public class PicAligner {
 	public BufferedImage baseImage;
 	
 	//	Constructor for PicAligner
-	public PicAligner(File base, File[] fileArr) {
+	public PicAligner(File base, ArrayList<File> fileList) {
 		//	Create BufferedImage from base
 		try {
 			baseImage = ImageIO.read(base);
@@ -39,20 +39,20 @@ public class PicAligner {
 		}
 		
 		//	Add all of the images to imageList
-		importImages(fileArr);
+		importImages(fileList);
 	}
 	
 	//	Method to import images to add to imageList
-	public void importImages(File[] fileArr) {
+	public void importImages(ArrayList<File> fileList) {
 		//	Set size of imageList
-		imageList = new ArrayList<BufferedImage>(fileArr.length);
+		imageList = new ArrayList<BufferedImage>(fileList.size());
 		
 		//	Loop through entire array of files
-		for (int i = 0; i < fileArr.length; i++) {
+		for (int i = 0; i < fileList.size(); i++) {
 			BufferedImage img = null;
 			try {
 				//	Create BufferedImage from current file
-				img = ImageIO.read(fileArr[i]);
+				img = ImageIO.read(fileList.get(i));
 				
 				//	Add current BufferedImage to imageList
 				imageList.add(img);
@@ -63,7 +63,7 @@ public class PicAligner {
 				errorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				errorFrame.setSize(150, 50);
 				errorFrame.setResizable(false);
-				JLabel lblErrorMessage = new JLabel("Could not read " + fileArr[i].toString() + " as an image");
+				JLabel lblErrorMessage = new JLabel("Could not read " + fileList.get(i).toString() + " as an image");
 				lblErrorMessage.setBounds(0, 0, 150, 50);
 				lblErrorMessage.setHorizontalAlignment(SwingConstants.CENTER);
 				lblErrorMessage.setVerticalAlignment(SwingConstants.CENTER);
@@ -84,7 +84,7 @@ public class PicAligner {
 	
 	public static void main (String args[]) {
 		//	Create the input JFrame
-		//inputGUI uiWindow = new inputGUI();
+		inputGUI uiWindow = new inputGUI();
 		
 		/*
 		//	Create file to be converted to buffered image
